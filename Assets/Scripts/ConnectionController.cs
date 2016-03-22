@@ -42,27 +42,16 @@ public class ConnectionController : MonoBehaviour {
         print("enter corroutine");
         WWW data = new WWW("http://localhost:3000/data");
         yield return new WaitForSeconds(1.0f);
-        print(data);
         print(data.text);
         testModel = TestModel.CreateFromJSON(data.text);
         uiText[0].text = data.text;
         uiText[1].text = testModel.Test;
         uiText[2].text = testModel.Description.ToString();
-        uiText[3].text = "Aleluja!!!";
-        print(testModel);
+        uiText[3].text = "Eureka";
+        yield return data.text;
     }
 
-    
-
-    //private void readJsonResponse(string p)
-    //{
-    //    print(p);
-    //    testModel = TestModel.CreateFromJSON(p.ToString());
-    //    uiText[0].text = p;
-    //    uiText[1].text = testModel.Test;
-    //    print(testModel.Test);
-        
-    //}
+  
 	void Start () {
 	    //make the api calls here
         StartCoroutine(GetServer());
@@ -90,6 +79,6 @@ public class ConnectionController : MonoBehaviour {
         WWW data = new WWW("http://localhost:3000/data",form);
         yield return new WaitForSeconds(1.0f);
         print(data.text);
-        yield return data;
+        yield return data.text;
     }
 }
