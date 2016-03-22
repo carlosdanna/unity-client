@@ -5,7 +5,7 @@ using System.Net;
 using System.IO;
 
 [System.Serializable]
-class TestModel : MonoBehaviour
+class TestModel 
 {
 
     public string Test;
@@ -16,11 +16,14 @@ class TestModel : MonoBehaviour
         Test = "";
         Description = 0;
     }
+     
+    
     public static TestModel CreateFromJSON(string jsonString)
     {
         return JsonUtility.FromJson<TestModel>(jsonString);
     }
 
+    
     public static TestModel CreateFromJson(string p)
     {
         return JsonUtility.FromJson<TestModel>(p);
@@ -36,15 +39,18 @@ public class ConnectionController : MonoBehaviour {
     private TestModel testModel;
 
     IEnumerator CallServer() {
-        
+        print("enter corroutine");
         WWW data = new WWW("http://localhost:3000/data");
-        yield return new WaitForSeconds(3.0f);
+        yield return new WaitForSeconds(1.0f);
+        print(data);
+        print(data.text);
         testModel = TestModel.CreateFromJSON(data.text);
         uiText[0].text = data.text;
         uiText[1].text = testModel.Test;
         uiText[2].text = testModel.Description.ToString();
+        uiText[3].text = "Aleluja!!!";
         print(testModel);
-        //readJsonResponse(data.text);
+        
         
     }
 
@@ -68,7 +74,8 @@ public class ConnectionController : MonoBehaviour {
 	void Update () {
 	    //if there are many whenever press spacebar go to the next one in the array
         if (Input.GetKeyDown(KeyCode.Space)) {
-            print("Check");
+            print("space");
+            
         }
 	}
 }
