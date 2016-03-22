@@ -38,7 +38,7 @@ public class ConnectionController : MonoBehaviour {
     
     private TestModel testModel;
 
-    IEnumerator CallServer() {
+    IEnumerator GetServer() {
         print("enter corroutine");
         WWW data = new WWW("http://localhost:3000/data");
         yield return new WaitForSeconds(1.0f);
@@ -50,8 +50,6 @@ public class ConnectionController : MonoBehaviour {
         uiText[2].text = testModel.Description.ToString();
         uiText[3].text = "Aleluja!!!";
         print(testModel);
-        
-        
     }
 
     
@@ -67,7 +65,7 @@ public class ConnectionController : MonoBehaviour {
     //}
 	void Start () {
 	    //make the api calls here
-        StartCoroutine(CallServer());
+        StartCoroutine(GetServer());
 	}
 	
 	// Update is called once per frame
@@ -75,7 +73,23 @@ public class ConnectionController : MonoBehaviour {
 	    //if there are many whenever press spacebar go to the next one in the array
         if (Input.GetKeyDown(KeyCode.Space)) {
             print("space");
-            
+        }
+
+        if (Input.GetKeyDown(KeyCode.A)){
+            string a = "Doing a barrel roll";
+            print("enter key pressed");
+            StartCoroutine(PostServer(a));
         }
 	}
+
+    private IEnumerator PostServer(string a)
+    {
+        print("post server corroutine");
+        WWWForm form = new WWWForm();
+        form.AddField("data",a);
+        WWW data = new WWW("http://localhost:3000/data",form);
+        yield return new WaitForSeconds(1.0f);
+        print(data.text);
+        yield return data;
+    }
 }
